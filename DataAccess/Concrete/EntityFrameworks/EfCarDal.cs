@@ -1,5 +1,7 @@
-﻿using DataAccess.Abstract;
+﻿using Core.DataAccess.EntityFramework;
+using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,48 +11,8 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFrameworks
 {
-    public class EfCarDal : ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, ReCapDataContext>, ICarDal
     {
-        private object modifiedEntity;
-        private object uptatedEntity;
-
-        public void Add(Car entity)
-        {
-            using (ReCapDataContext context = new ReCapDataContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
-            }
-        }
-
-        public void Delete(Car entity)
-        {
-            using (ReCapDataContext context = new ReCapDataContext())
-            {
-                var deletedEntity = context.Entry(entity);
-                deletedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
-        }
-
-        public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
-        {
-            using (ReCapDataContext context=new ReCapDataContext())
-            { 
-                return filter == null ? context.Set<Car>().ToList() : 
-                context.Set<Car>().Where(filter).ToList(); 
-            }
-        }
-
-        public void Uptade(Car entity)
-        {
-            using (ReCapDataContext context = new ReCapDataContext())
-            {
-                var updatedEntity = context.Entry(entity);
-                updatedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-            }
-        }
+       
     }
 }

@@ -9,7 +9,7 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;
+        ICarDal _carDal; //Bağımlılığı ortadan kaldırma
 
         public CarManager(ICarDal carDal)
         {
@@ -19,6 +19,26 @@ namespace Business.Concrete
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
+        }
+
+        public Car GetById(int carId)
+        {
+            return _carDal.Get(x => x.CarId == carId);
+        }
+
+        public void Insert(Car car)
+        {
+            _carDal.Add(car);
+        }
+
+        public void Uptade(Car car)
+        {
+            _carDal.Uptade(car);
+        }
+
+        public void Delete(Car car)
+        {
+            _carDal.Delete(car);
         }
     }
 }
